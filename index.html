@@ -9,57 +9,74 @@
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.21/dist/sweetalert2.min.css"
     />
     <style>
-      /* Retro Video Game Styling */
-      html, body {
-        font-family: 'Press Start 2P', cursive; /* Pixelated font */
+      /* Responsive Retro Video Game Styling */
+      html,
+      body {
+        font-family: "Press Start 2P", cursive; /* Pixelated font */
         background: radial-gradient(circle, #1a1a1a, #000000);
         color: #00ffcc;
         margin: 0;
         padding: 0;
         height: 100%;
+        min-height: 100%; /* Ensure the body takes at least the full viewport height */
+        display: block; /* Change from flex to block to allow scrolling */
+      }
+
+      #game-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
+        min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+        padding: 2vh 0; /* Add padding to prevent content from touching the edges */
       }
+
       h1 {
-        font-size: 2rem;
+        font-size: 2vw; /* Scale based on viewport width */
         color: #ffcc00;
         text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
-        margin-bottom: 20px;
+        margin-bottom: 2vh; /* Scale based on viewport height */
       }
+
       canvas {
         background-color: #111;
-        border: 5px solid #00ffcc;
-        border-radius: 10px;
-        box-shadow: 0 0 20px #00ffcc;
-        margin: 20px auto;
+        border: 0.5vw solid #00ffcc; /* Scale border width */
+        border-radius: 1vw; /* Scale border radius */
+        box-shadow: 0 0 2vw #00ffcc;
+        margin: 2vh auto;
         display: block;
+        width: 90vw; /* Make canvas responsive */
+        height: auto; /* Maintain aspect ratio */
+        max-width: 480px; /* Limit maximum size */
+        max-height: 320px; /* Limit maximum size */
       }
+
       p {
-        font-size: 1rem;
-        margin: 10px 0;
+        font-size: 1.5vw; /* Scale text size */
+        margin: 1vh 0;
         color: #ffffff;
         text-shadow: 0 0 5px #ffffff;
       }
+
       button {
         background: linear-gradient(45deg, #00ffcc, #0095dd);
         color: #000;
-        font-size: 1rem;
-        font-family: 'Press Start 2P', cursive;
+        font-size: 1.5vw; /* Scale button text size */
+        font-family: "Press Start 2P", cursive;
         border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
+        padding: 1vh 2vw; /* Scale padding */
+        border-radius: 0.5vw; /* Scale border radius */
         cursor: pointer;
         text-transform: uppercase;
-        box-shadow: 0 0 10px #00ffcc, 0 0 20px #0095dd;
+        box-shadow: 0 0 1vw #00ffcc, 0 0 2vw #0095dd;
         transition: transform 0.2s, box-shadow 0.2s;
-        margin: 10px;
+        margin: 1vh;
       }
+
       button:hover {
         transform: scale(1.1);
-        box-shadow: 0 0 20px #00ffcc, 0 0 30px #0095dd;
+        box-shadow: 0 0 2vw #00ffcc, 0 0 3vw #0095dd;
       }
     </style>
     <link
@@ -68,13 +85,15 @@
     />
   </head>
   <body>
-    <h1>Bricks Game</h1>
-    <canvas id="myCanvas" width="480" height="320"></canvas>
-    <p>Score: <span id="score">0</span></p>
-    <p>Level: <span id="level">1</span></p>
-    <button id="pauseButton">Pause</button>
-    <button id="instructionsButton">Instructions</button>
-    <button onclick="window.location.href='levels.html'">Select Level</button>
+    <div id="game-container">
+      <h1>Bricks Game</h1>
+      <canvas id="myCanvas" width="480" height="320"></canvas>
+      <p>Score: <span id="score">0</span></p>
+      <p>Level: <span id="level">1</span></p>
+      <button id="pauseButton">Start</button>
+      <button id="instructionsButton">Instructions</button>
+      <button onclick="window.location.href='levels.html'">Select Level</button>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="SAT.js"></script>
@@ -340,7 +359,8 @@
 
       let score = 0,
         gameRunning = true,
-        gamePaused = false;
+        gamePaused = false,
+        gameStarted = false; // Track if the game has started
       let rightPressed = false,
         leftPressed = false;
 
@@ -371,14 +391,20 @@
       });
 
       // Pause button functionality
-      document.getElementById("pauseButton").addEventListener("click", () => {
-        gamePaused = !gamePaused;
-        document.getElementById("pauseButton").innerText = gamePaused
-          ? "Resume"
-          : "Pause";
+      const pauseButton = document.getElementById("pauseButton");
+      pauseButton.addEventListener("click", () => {
+        if (!gameStarted) {
+          gameStarted = true;
+          gamePaused = false;
+          pauseButton.innerText = "Pause"; // Change to "Pause" after starting
+          update(); // Start the game loop
+        } else {
+          gamePaused = !gamePaused;
+          pauseButton.innerText = gamePaused ? "Resume" : "Pause";
 
-        if (!gamePaused) {
-          update(); // Resume the game loop when unpaused
+          if (!gamePaused) {
+            update(); // Resume the game loop when unpaused
+          }
         }
       });
 
@@ -406,32 +432,40 @@
         for (let c = 0; c < bricks.length; c++) {
           for (let r = 0; r < bricks[c].length; r++) {
             let brick = bricks[c][r];
-            if (!brick) continue;
+            if (!brick) continue; // Skip if the brick is already removed
             let response = new Response();
             if (SAT.testCirclePolygon(ball, brick, response)) {
-              bricks[c][r] = null;
+              bricks[c][r] = null; // Remove the brick
               score++;
               document.getElementById("score").innerText = score;
 
               // Determine collision side and adjust velocity
-              if (Math.abs(response.overlapV.x) > Math.abs(response.overlapV.y)) {
+              if (
+                Math.abs(response.overlapV.x) > Math.abs(response.overlapV.y)
+              ) {
                 ballVelocity.x = -ballVelocity.x; // Side collision
               } else {
                 ballVelocity.y = -ballVelocity.y; // Top/bottom collision
               }
 
-              if (score === totalBricks) {
-                gameRunning = false;
-                Swal.fire({
-                  title: "Level Complete!",
-                  text: "Proceed to the next level?",
-                  icon: "success",
-                  confirmButtonText: "Next Level",
-                }).then(() => {
-                  localStorage.setItem("selectedLevel", selectedLevel + 1);
-                  document.location.reload();
-                });
+              // Check if all bricks are cleared
+              if (score >= totalBricks) {
+                // Delay stopping the game to ensure the last brick is rendered as destroyed
+                setTimeout(() => {
+                  gameRunning = false; // Stop the game after a short delay
+                  Swal.fire({
+                    title: "Level Complete!",
+                    text: "Proceed to the next level?",
+                    icon: "success",
+                    confirmButtonText: "Next Level",
+                  }).then(() => {
+                    localStorage.setItem("selectedLevel", selectedLevel + 1);
+                    document.location.reload(); // Reload the page for the next level
+                  });
+                }, 100); // Short delay (100ms) to allow rendering to complete
               }
+
+              return; // Exit the loop after handling the collision
             }
           }
         }
@@ -474,28 +508,30 @@
       }
 
       // Add event listener for the instructions button
-      document.getElementById("instructionsButton").addEventListener("click", () => {
-        gamePaused = true; // Pause the game while showing instructions
-        Swal.fire({
-          title: "How to Play",
-          html: `
+      document
+        .getElementById("instructionsButton")
+        .addEventListener("click", () => {
+          gamePaused = true; // Pause the game while showing instructions
+          Swal.fire({
+            title: "How to Play",
+            html: `
             <p style="color: #000;">Use the <strong>Arrow Keys</strong> to move the paddle left and right.</p>
             <p style="color: #000;">Break all the bricks to complete the level.</p>
             <p style="color: #000;">Press <strong>R</strong> to reset the level.</p>
             <p style="color: #000;">Click "Select Level" to choose a different level.</p>
           `,
-          icon: "info",
-          confirmButtonText: "Got it!",
-          background: "#fff", // Set modal background to white
-        }).then(() => {
-          gamePaused = false; // Resume the game after closing instructions
-          update(); // Resume the game loop
+            icon: "info",
+            confirmButtonText: "Got it!",
+            background: "#fff", // Set modal background to white
+          }).then(() => {
+            gamePaused = false; // Resume the game after closing instructions
+            update(); // Resume the game loop
+          });
         });
-      });
 
       // Game update loop
       function update() {
-        if (!gameRunning || gamePaused) return; // Stop updating if paused or game over
+        if (!gameRunning || gamePaused || !gameStarted) return; // Stop updating if paused, game over, or not started
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBricks();
         drawBall();
@@ -522,8 +558,6 @@
 
         requestAnimationFrame(update);
       }
-
-      update(); // Start the game loop
     </script>
   </body>
 </html>
