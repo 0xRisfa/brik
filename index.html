@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bricks Game</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.21/dist/sweetalert2.min.css"
+    />
+    <style>
+      /* Retro Video Game Styling */
+      html, body {
+        font-family: 'Press Start 2P', cursive; /* Pixelated font */
+        background: radial-gradient(circle, #1a1a1a, #000000);
+        color: #00ffcc;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2rem;
+        color: #ffcc00;
+        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+        margin-bottom: 20px;
+      }
+      canvas {
+        background-color: #111;
+        border: 5px solid #00ffcc;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00ffcc;
+        margin: 20px auto;
+        display: block;
+      }
+      p {
+        font-size: 1rem;
+        margin: 10px 0;
+        color: #ffffff;
+        text-shadow: 0 0 5px #ffffff;
+      }
+      button {
+        background: linear-gradient(45deg, #00ffcc, #0095dd);
+        color: #000;
+        font-size: 1rem;
+        font-family: 'Press Start 2P', cursive;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        box-shadow: 0 0 10px #00ffcc, 0 0 20px #0095dd;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin: 10px;
+      }
+      button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px #00ffcc, 0 0 30px #0095dd;
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h1>Bricks Game</h1>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <p>Score: <span id="score">0</span></p>
+    <p>Level: <span id="level">1</span></p>
+    <button id="pauseButton">Pause</button>
+    <button id="instructionsButton">Instructions</button>
+    <button onclick="window.location.href='levels.html'">Select Level</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="SAT.js"></script>
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const V = SAT.Vector,
+        Circle = SAT.Circle,
+        Box = SAT.Box,
+        Response = SAT.Response;
+      let ball = new Circle(new V(240, 280), 10);
+      let ballVelocity = new V(2, -2);
+
+      // Paddle properties
+      const paddleWidth = 75,
+        paddleHeight = 10;
+      let paddleX = (canvas.width - paddleWidth) / 2;
+
+      // Brick settings
+      const defaultBrickWidth = 75,
+        brickHeight = 20,
+        brickPadding = 10,
+        brickOffsetLeft = 30;
+
+      // Levels configuration
+      const levels = [
+        {
+          // Level 1 - Single Row
+          pattern: [[1, 1, 1, 1, 1]],
+          offsetTop: 60,
+        },
+        {
+          // Level 2 - Two Rows
+          pattern: [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1],
+          ],
+          offsetTop: 50,
+        },
+        {
+          // Level 3 - Pyramid Shape
+          pattern: [
+            [0, 0, 1, 0, 0],
+            [0, 1, 1, 1, 0],
+            [1, 1, 1, 1, 1],
+          ],
+          offsetTop: 50,
+        },
+        {
+          // Level 4 - Checkerboard Style
+          pattern: [
+            [1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1],
+          ],
+          offsetTop: 50,
+        },
+        {
+          // Level 5 - Expanding Rows
+          pattern: [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1],
+          ],
+          offsetTop: 50,
+        },
+        {
+          // Level 6 - Alternating Blocks
+          pattern: [
+            [1, 1, 1, 1, 1],
+            [0, 1, 1, 1, 0],
+            [1, 0, 1, 0, 1],
+          ],
+          offsetTop: 50,
+        },
+        {
+          // Level 7 - Wall with Small Gaps
+          pattern: [
+            [1, 1, 1, 1, 1, 1],
+            [0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1],
+          ],
+          offsetTop: 40,
+        },
+        {
+          // Level 8 - Inverted Pyramid
+          pattern: [
+            [1, 1, 1, 1, 1],
+            [0, 1, 1, 1, 0],
+            [0, 0, 1, 0, 0],
+          ],
+          offsetTop: 50,
+        },
+        {
+          // Level 9 - Zig-Zag Formation
+          pattern: [
+            [1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0],
+          ],
+          offsetTop: 40,
+        },
+        {
+          // Level 10 - Compact Grid
+          pattern: [
+            [1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1],
+          ],
+          offsetTop: 40,
+        },
+        {
+          // Level 11 - Block Wall
+          pattern: [
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+          ],
+          offsetTop: 30,
+        },
+        {
+          // Level 12 - Alternating Wall
+          pattern: [
+            [1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1],
+          ],
+          offsetTop: 30,
+        },
+        {
+          // Level 13 - Three Towers
+          pattern: [
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1],
+          ],
+          offsetTop: 30,
+        },
+        {
+          // Level 14 - Double Rows with Gaps
+          pattern: [
+            [1, 1, 0, 1, 1],
+            [1, 1, 0, 1, 1],
+            [1, 1, 0, 1, 1],
+            [1, 1, 0, 1, 1],
+          ],
+          offsetTop: 30,
+        },
+        {
+          // Level 15 - Nearly Full Screen
+          pattern: [
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+          ],
+          offsetTop: 20,
+        },
+        {
+          // Level 16 - Maze-like Pattern
+          pattern: [
+            [1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1],
+          ],
+          offsetTop: 20,
+        },
+        {
+          // Level 17 - Full Grid with Small Holes
+          pattern: [
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1],
+          ],
+          offsetTop: 20,
+        },
+        {
+          // Level 18 - Double Checkerboard
+          pattern: [
+            [1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1],
+            [0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 1],
+          ],
+          offsetTop: 20,
+        },
+        {
+          // Level 19 - The Ultimate Challenge
+          pattern: [
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1],
+          ],
+          offsetTop: 10,
+        },
+        {
+          // Level 20 - Maximum Chaos!
+          pattern: [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+          ],
+          offsetTop: 10,
+        },
+      ];
+
+      let selectedLevel = parseInt(
+        localStorage.getItem("selectedLevel") || "1",
+        10
+      );
+      let levelConfig = levels[selectedLevel - 1] || levels[0];
+
+      document.getElementById("level").innerText = selectedLevel; // Update level tracker
+
+      // Adjust brick width dynamically if level has more than 5 columns
+      let cols = levelConfig.pattern[0].length;
+      let brickWidth =
+        cols > 5
+          ? (canvas.width - 2 * brickOffsetLeft - (cols - 1) * brickPadding) /
+            cols
+          : defaultBrickWidth;
+
+      let bricks = [];
+      if (levelConfig.pattern) {
+        for (let r = 0; r < levelConfig.pattern.length; r++) {
+          bricks[r] = [];
+          for (let c = 0; c < levelConfig.pattern[r].length; c++) {
+            if (levelConfig.pattern[r][c] === 1) {
+              let x = c * (brickWidth + brickPadding) + brickOffsetLeft;
+              let y = r * (brickHeight + brickPadding) + levelConfig.offsetTop;
+              bricks[r][c] = new Box(
+                new V(x, y),
+                brickWidth,
+                brickHeight
+              ).toPolygon();
+            }
+          }
+        }
+      } else {
+        for (let c = 0; c < levelConfig.cols; c++) {
+          bricks[c] = [];
+          for (let r = 0; r < levelConfig.rows; r++) {
+            let x = c * (brickWidth + brickPadding) + brickOffsetLeft;
+            let y = r * (brickHeight + brickPadding) + levelConfig.offsetTop;
+            bricks[c][r] = new Box(
+              new V(x, y),
+              brickWidth,
+              brickHeight
+            ).toPolygon();
+          }
+        }
+      }
+
+      let score = 0,
+        gameRunning = true,
+        gamePaused = false;
+      let rightPressed = false,
+        leftPressed = false;
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") rightPressed = true;
+        if (e.key === "ArrowLeft") leftPressed = true;
+      });
+      document.addEventListener("keyup", (e) => {
+        if (e.key === "ArrowRight") rightPressed = false;
+        if (e.key === "ArrowLeft") leftPressed = false;
+      });
+
+      // Add event listener for resetting the level with 'R' key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "r" || e.key === "R") {
+          Swal.fire({
+            title: "Reset Level",
+            text: "Are you sure you want to reset the level?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Reset",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              document.location.reload(); // Reload the page to reset the level
+            }
+          });
+        }
+      });
+
+      // Pause button functionality
+      document.getElementById("pauseButton").addEventListener("click", () => {
+        gamePaused = !gamePaused;
+        document.getElementById("pauseButton").innerText = gamePaused
+          ? "Resume"
+          : "Pause";
+
+        if (!gamePaused) {
+          update(); // Resume the game loop when unpaused
+        }
+      });
+
+      function ballPaddleCollision() {
+        let paddle = new Box(
+          new V(paddleX, canvas.height - paddleHeight),
+          paddleWidth,
+          paddleHeight
+        ).toPolygon();
+        let response = new Response();
+        if (SAT.testCirclePolygon(ball, paddle, response)) {
+          ballVelocity.y = -Math.abs(ballVelocity.y);
+          let hitPoint = (ball.pos.x - paddleX) / paddleWidth;
+          let angle = ((hitPoint - 0.5) * Math.PI) / 2;
+          ballVelocity.x = 4 * Math.sin(angle);
+        }
+      }
+
+      // Count total bricks in the pattern
+      let totalBricks = levelConfig.pattern
+        .flat()
+        .filter((brick) => brick === 1).length;
+
+      function collisionDetection() {
+        for (let c = 0; c < bricks.length; c++) {
+          for (let r = 0; r < bricks[c].length; r++) {
+            let brick = bricks[c][r];
+            if (!brick) continue;
+            let response = new Response();
+            if (SAT.testCirclePolygon(ball, brick, response)) {
+              bricks[c][r] = null;
+              score++;
+              document.getElementById("score").innerText = score;
+
+              // Determine collision side and adjust velocity
+              if (Math.abs(response.overlapV.x) > Math.abs(response.overlapV.y)) {
+                ballVelocity.x = -ballVelocity.x; // Side collision
+              } else {
+                ballVelocity.y = -ballVelocity.y; // Top/bottom collision
+              }
+
+              if (score === totalBricks) {
+                gameRunning = false;
+                Swal.fire({
+                  title: "Level Complete!",
+                  text: "Proceed to the next level?",
+                  icon: "success",
+                  confirmButtonText: "Next Level",
+                }).then(() => {
+                  localStorage.setItem("selectedLevel", selectedLevel + 1);
+                  document.location.reload();
+                });
+              }
+            }
+          }
+        }
+      }
+
+      function drawBall() {
+        ctx.beginPath();
+        ctx.arc(ball.pos.x, ball.pos.y, ball.r, 0, Math.PI * 2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(
+          paddleX,
+          canvas.height - paddleHeight,
+          paddleWidth,
+          paddleHeight
+        );
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function drawBricks() {
+        for (let c = 0; c < bricks.length; c++) {
+          for (let r = 0; r < bricks[c].length; r++) {
+            let brick = bricks[c][r];
+            if (brick) {
+              ctx.beginPath();
+              ctx.rect(brick.pos.x, brick.pos.y, brickWidth, brickHeight);
+              ctx.fillStyle = "#0095DD";
+              ctx.fill();
+              ctx.closePath();
+            }
+          }
+        }
+      }
+
+      // Add event listener for the instructions button
+      document.getElementById("instructionsButton").addEventListener("click", () => {
+        gamePaused = true; // Pause the game while showing instructions
+        Swal.fire({
+          title: "How to Play",
+          html: `
+            <p style="color: #000;">Use the <strong>Arrow Keys</strong> to move the paddle left and right.</p>
+            <p style="color: #000;">Break all the bricks to complete the level.</p>
+            <p style="color: #000;">Press <strong>R</strong> to reset the level.</p>
+            <p style="color: #000;">Click "Select Level" to choose a different level.</p>
+          `,
+          icon: "info",
+          confirmButtonText: "Got it!",
+          background: "#fff", // Set modal background to white
+        }).then(() => {
+          gamePaused = false; // Resume the game after closing instructions
+          update(); // Resume the game loop
+        });
+      });
+
+      // Game update loop
+      function update() {
+        if (!gameRunning || gamePaused) return; // Stop updating if paused or game over
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
+        drawBall();
+        drawPaddle();
+        collisionDetection();
+        ballPaddleCollision();
+        ball.pos.x += ballVelocity.x;
+        ball.pos.y += ballVelocity.y;
+
+        if (ball.pos.x + ball.r > canvas.width || ball.pos.x - ball.r < 0)
+          ballVelocity.x = -ballVelocity.x;
+        if (ball.pos.y - ball.r < 0) ballVelocity.y = -ballVelocity.y;
+        if (ball.pos.y + ball.r > canvas.height) {
+          gameRunning = false;
+          Swal.fire({
+            title: "Game Over",
+            icon: "error",
+            confirmButtonText: "Try Again",
+          }).then(() => document.location.reload());
+        }
+
+        if (rightPressed && paddleX < canvas.width - paddleWidth) paddleX += 7;
+        if (leftPressed && paddleX > 0) paddleX -= 7;
+
+        requestAnimationFrame(update);
+      }
+
+      update(); // Start the game loop
+    </script>
+  </body>
+</html>
