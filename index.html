@@ -8,81 +8,11 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.21/dist/sweetalert2.min.css"
     />
-    <style>
-      /* Responsive Retro Video Game Styling */
-      html,
-      body {
-        font-family: "Press Start 2P", cursive; /* Pixelated font */
-        background: radial-gradient(circle, #1a1a1a, #000000);
-        color: #00ffcc;
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        min-height: 100%; /* Ensure the body takes at least the full viewport height */
-        display: block; /* Change from flex to block to allow scrolling */
-      }
-
-      #game-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        min-height: 100vh; /* Ensure the container takes at least the full viewport height */
-        padding: 2vh 0; /* Add padding to prevent content from touching the edges */
-      }
-
-      h1 {
-        font-size: 2vw; /* Scale based on viewport width */
-        color: #ffcc00;
-        text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
-        margin-bottom: 2vh; /* Scale based on viewport height */
-      }
-
-      canvas {
-        background-color: #111;
-        border: 0.5vw solid #00ffcc; /* Scale border width */
-        border-radius: 1vw; /* Scale border radius */
-        box-shadow: 0 0 2vw #00ffcc;
-        margin: 2vh auto;
-        display: block;
-        width: 90vw; /* Make canvas responsive */
-        height: auto; /* Maintain aspect ratio */
-        max-width: 480px; /* Limit maximum size */
-        max-height: 320px; /* Limit maximum size */
-      }
-
-      p {
-        font-size: 1.5vw; /* Scale text size */
-        margin: 1vh 0;
-        color: #ffffff;
-        text-shadow: 0 0 5px #ffffff;
-      }
-
-      button {
-        background: linear-gradient(45deg, #00ffcc, #0095dd);
-        color: #000;
-        font-size: 1.5vw; /* Scale button text size */
-        font-family: "Press Start 2P", cursive;
-        border: none;
-        padding: 1vh 2vw; /* Scale padding */
-        border-radius: 0.5vw; /* Scale border radius */
-        cursor: pointer;
-        text-transform: uppercase;
-        box-shadow: 0 0 1vw #00ffcc, 0 0 2vw #0095dd;
-        transition: transform 0.2s, box-shadow 0.2s;
-        margin: 1vh;
-      }
-
-      button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 2vw #00ffcc, 0 0 3vw #0095dd;
-      }
-    </style>
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="style.css"/>
   </head>
   <body>
     <div id="game-container">
@@ -404,6 +334,26 @@
 
           if (!gamePaused) {
             update(); // Resume the game loop when unpaused
+          }
+        }
+      });
+
+      // Add event listener for spacebar to pause/resume the game
+      document.addEventListener("keydown", (e) => {
+        if (e.key === " ") {
+          e.preventDefault(); // Prevent default spacebar behavior (e.g., scrolling)
+          if (!gameStarted) {
+            gameStarted = true;
+            gamePaused = false;
+            pauseButton.innerText = "Pause"; // Change to "Pause" after starting
+            update(); // Start the game loop
+          } else {
+            gamePaused = !gamePaused;
+            pauseButton.innerText = gamePaused ? "Resume" : "Pause";
+
+            if (!gamePaused) {
+              update(); // Resume the game loop when unpaused
+            }
           }
         }
       });
