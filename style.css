@@ -6,25 +6,30 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  min-height: 100%;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 #game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* Distribute space evenly */
   text-align: center;
-  min-height: 100vh; 
-  padding: 2vh 0; 
+  height: 100vh; /* Use full viewport height */
+  width: 100vw; /* Use full viewport width */
+  padding: 2vh;
+  box-sizing: border-box; /* Include padding in height/width calculations */
 }
 
 h1 {
-  font-size: 2vw;
+  font-size: 4vw; /* Adjust font size for smaller screens */
   color: #ffcc00;
   text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
-  margin-bottom: 2vh; 
+  margin: 0;
 }
 
 canvas {
@@ -32,17 +37,16 @@ canvas {
   border: 0.5vw solid #00ffcc;
   border-radius: 1vw;
   box-shadow: 0 0 2vw #00ffcc;
-  margin: 2vh auto;
   display: block;
-  width: 90vw;
+  width: 80vw; /* Scale canvas width dynamically */
   height: auto;
   max-width: 480px;
   max-height: 320px;
 }
 
 p {
-  font-size: 1.5vw;
-  margin: 1vh 0;
+  font-size: 1vw; /* Adjust font size for smaller screens */
+  margin: 0.5vh 0;
   color: #ffffff;
   text-shadow: 0 0 5px #ffffff;
 }
@@ -50,19 +54,61 @@ p {
 button {
   background: linear-gradient(45deg, #00ffcc, #0095dd);
   color: #000;
-  font-size: 1.5vw;
+  font-size: 3vw; /* Adjust font size for smaller screens */
   font-family: "Press Start 2P", cursive;
   border: none;
   padding: 1vh 2vw;
-  border-radius: 0.5vw; 
+  border-radius: 0.5vw;
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0 0 1vw #00ffcc, 0 0 2vw #0095dd;
   transition: transform 0.2s, box-shadow 0.2s;
-  margin: 1vh;
+  margin: 0.5vh;
 }
 
 button:hover {
   transform: scale(1.1);
   box-shadow: 0 0 2vw #00ffcc, 0 0 3vw #0095dd;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 5vw; /* Increase font size for better readability */
+  }
+
+  p {
+    font-size: 3.5vw; /* Adjust paragraph font size */
+  }
+
+  button {
+    font-size: 4vw; /* Adjust button font size */
+    padding: 1.5vh 3vw; /* Increase padding for touch-friendly buttons */
+  }
+
+  canvas {
+    width: 90vw; /* Use more screen width on smaller devices */
+    max-width: none; /* Remove max-width restriction */
+    height: auto;
+  }
+}
+
+/* Media query for very small screens (e.g., phones in portrait mode) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 6vw; /* Further increase font size */
+  }
+
+  p {
+    font-size: 4vw; /* Further adjust paragraph font size */
+  }
+
+  button {
+    font-size: 4.5vw; /* Further adjust button font size */
+    padding: 2vh 4vw; /* Increase padding for smaller screens */
+  }
+
+  canvas {
+    width: 95vw; /* Use almost full screen width */
+  }
 }
