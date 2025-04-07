@@ -408,21 +408,46 @@
                   gameRunning = false; // Stop the game after a short delay
                   if (selectedLevel === "∞") {
                     // Infinite level logic
-                    levelConfig = generateRandomBrickLayout(); // Generate a new random layout
-                    initializeBricks(); // Reinitialize bricks for the new layout
-                    score = 0; // Reset the score for the new infinite level
+                    Swal.fire({
+                      title: "Victory!",
+                      text: "You've cleared the infinite level! A new random layout will be generated.",
+                      icon: "success",
+                      confirmButtonText: "Continue",
+                    }).then(() => {
+                      levelConfig = generateRandomBrickLayout(); // Generate a new random layout
+                      initializeBricks(); // Reinitialize bricks for the new layout
+                      score = 0; // Reset the score for the new infinite level
+                      gameRunning = true; // Restart the game
+                      startGameLoop(); // Restart the game loop safely
+                    });
                   } else {
                     selectedLevel++;
+                    if (selectedLevel > 20) {
+                      selectedLevel = "∞"; // Switch to infinite levels after level 20
+                    }
                     levelConfig =
-                      levels[selectedLevel - 1] || generateRandomBrickLayout();
+                      selectedLevel === "∞"
+                        ? generateRandomBrickLayout()
+                        : levels[selectedLevel - 1] ||
+                          generateRandomBrickLayout();
                     localStorage.setItem("selectedLevel", selectedLevel);
-                    initializeBricks(); // Reinitialize bricks for the new level
-                    score = 0; // Reset the score for the new level
+
+                    Swal.fire({
+                      title: "Level Complete!",
+                      text: `You've completed Level ${
+                        selectedLevel - 1
+                      }. Moving to Level ${selectedLevel}.`,
+                      icon: "success",
+                      confirmButtonText: "Continue",
+                    }).then(() => {
+                      initializeBricks(); // Reinitialize bricks for the new level
+                      score = 0; // Reset the score for the new level
+                      gameRunning = true; // Restart the game
+                      startGameLoop(); // Restart the game loop safely
+                    });
                   }
 
                   document.getElementById("level").innerText = selectedLevel; // Update level tracker
-                  gameRunning = true; // Restart the game
-                  startGameLoop(); // Restart the game loop safely
                 }, 100); // Short delay (100ms) to allow rendering to complete
               }
 
