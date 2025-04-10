@@ -440,10 +440,7 @@
                       icon: "success",
                       confirmButtonText: "Continue",
                     }).then(() => {
-                      initializeBricks(); // Reinitialize bricks for the new level
-                      score = 0; // Reset the score for the new level
-                      gameRunning = true; // Restart the game
-                      startGameLoop(); // Restart the game loop safely
+                      window.location.reload();
                     });
                   }
 
@@ -568,10 +565,10 @@
           Swal.fire({
             title: "How to Play",
             html: `
-            <p style="color: #000;">Use the <strong>Arrow Keys</strong> to move the paddle left and right.</p>
-            <p style="color: #000;">Break all the bricks to complete the level.</p>
-            <p style="color: #000;">Press <strong>R</strong> to reset the level.</p>
-            <p style="color: #000;">Click "Select Level" to choose a different level.</p>
+            <p style="color: #000; margin: 20px;">Use the <strong>Arrow Keys</strong> to move the paddle left and right.</p>
+            <p style="color: #000; margin: 20px;">Break all the bricks to complete the level.</p>
+            <p style="color: #000; margin: 20px;">Press <strong>R</strong> to reset the level.</p>
+            <p style="color: #000; margin: 20px;">Click "Select Level" to choose a different level.</p>
           `,
             icon: "info",
             confirmButtonText: "Got it!",
