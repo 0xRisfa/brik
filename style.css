@@ -17,16 +17,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* Distribute space evenly */
+  justify-content: space-between;
   text-align: center;
-  height: 100vh; /* Use full viewport height */
-  width: 100vw; /* Use full viewport width */
+  height: 100vh;
+  width: 100vw;
   padding: 2vh;
-  box-sizing: border-box; /* Include padding in height/width calculations */
+  box-sizing: border-box;
 }
 
 h1 {
-  font-size: 4vw; /* Adjust font size for smaller screens */
+  font-size: 4vw;
   color: #ffcc00;
   text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
   margin: 0;
@@ -34,27 +34,27 @@ h1 {
 
 canvas {
   background-color: #111;
-  border: 0.5vw solid #00ffcc;
+  border: 0.5vw solid #00c7d5;
   border-radius: 1vw;
-  box-shadow: 0 0 2vw #00ffcc;
+  box-shadow: 0 0 2vw #00c7d5;
   display: block;
-  width: 80vw; /* Scale canvas width dynamically */
+  width: 80vw;
   height: auto;
   max-width: 480px;
   max-height: 320px;
 }
 
 p {
-  font-size: 1vw; /* Adjust font size for smaller screens */
+  font-size: 1vw;
   margin: 0.5vh 0;
   color: #ffffff;
   text-shadow: 0 0 5px #ffffff;
 }
 
 button {
-  background: linear-gradient(45deg, #00ffcc, #0095dd);
+  background: #00c7d5;
   color: #000;
-  font-size: 3vw; /* Adjust font size for smaller screens */
+  font-size: 3vw;
   font-family: "Press Start 2P", cursive;
   border: none;
   padding: 1vh 2vw;
@@ -68,47 +68,44 @@ button {
 
 button:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 2vw #00ffcc, 0 0 3vw #0095dd;
 }
 
-/* Media query for smaller screens */
 @media (max-width: 768px) {
   h1 {
-    font-size: 5vw; /* Increase font size for better readability */
+    font-size: 5vw;
   }
 
   p {
-    font-size: 3.5vw; /* Adjust paragraph font size */
+    font-size: 3.5vw;
   }
 
   button {
-    font-size: 4vw; /* Adjust button font size */
-    padding: 1.5vh 3vw; /* Increase padding for touch-friendly buttons */
+    font-size: 4vw;
+    padding: 1.5vh 3vw;
   }
 
   canvas {
-    width: 90vw; /* Use more screen width on smaller devices */
-    max-width: none; /* Remove max-width restriction */
+    width: 90vw;
+    max-width: none;
     height: auto;
   }
 }
 
-/* Media query for very small screens (e.g., phones in portrait mode) */
 @media (max-width: 480px) {
   h1 {
-    font-size: 6vw; /* Further increase font size */
+    font-size: 6vw;
   }
 
   p {
-    font-size: 4vw; /* Further adjust paragraph font size */
+    font-size: 4vw;
   }
 
   button {
-    font-size: 4.5vw; /* Further adjust button font size */
-    padding: 2vh 4vw; /* Increase padding for smaller screens */
+    font-size: 4.5vw;
+    padding: 2vh 4vw;
   }
 
   canvas {
-    width: 95vw; /* Use almost full screen width */
+    width: 95vw;
   }
 }
