@@ -26,9 +26,9 @@ body {
 }
 
 h1 {
-  font-size: 4vw;
+  font-size: 3vw;
   color: #ffcc00;
-  text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+  text-shadow: 0 0 2vw #ffcc00, 0 0 2vw #ffcc00;
   margin: 0;
 }
 
@@ -51,23 +51,28 @@ p {
   text-shadow: 0 0 5px #ffffff;
 }
 
-button {
+.buttons {
   background: #00c7d5;
   color: #000;
-  font-size: 3vw;
+  font-size: 2vw; /* Font size scales with viewport width */
   font-family: "Press Start 2P", cursive;
   border: none;
-  padding: 1vh 2vw;
-  border-radius: 0.5vw;
+  padding: 1vh 2vw; /* Padding scales with viewport height and width */
+  border-radius: 1vw; /* Rounded corners scale with viewport width */
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0 0 1vw #00ffcc, 0 0 2vw #0095dd;
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin: 0.5vh;
+  margin: 1vh; /* Margin scales with viewport height */
+  width: 40vw; /* Button width scales with viewport width */
+  height: 7vh; /* Button height scales with viewport height */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center text vertically */
 }
 
 button:hover {
-  transform: scale(1.1);
+  transform: scale(1.1); /* Slightly enlarge button on hover */
 }
 
 @media (max-width: 768px) {
@@ -80,8 +85,9 @@ button:hover {
   }
 
   button {
-    font-size: 4vw;
-    padding: 1.5vh 3vw;
+    font-size: 2.5vw; /* Adjust font size for smaller screens */
+    width: 220px; /* Adjust width for smaller screens */
+    height: 55px; /* Adjust height for smaller screens */
   }
 
   canvas {
@@ -101,8 +107,9 @@ button:hover {
   }
 
   button {
-    font-size: 4.5vw;
-    padding: 2vh 4vw;
+    font-size: 3.5vw; /* Adjust font size for very small screens */
+    width: 200px; /* Adjust width for very small screens */
+    height: 50px; /* Adjust height for very small screens */
   }
 
   canvas {
