@@ -13,6 +13,7 @@ body {
   overflow-x: hidden;
 }
 
+/* Glavni container */
 #game-container {
   display: flex;
   flex-direction: column;
@@ -25,6 +26,7 @@ body {
   box-sizing: border-box;
 }
 
+/* Naslov igre */
 h1 {
   font-size: 3vw;
   color: #ffcc00;
@@ -32,8 +34,9 @@ h1 {
   margin: 0;
 }
 
+/* canvas za igro */
 canvas {
-  background-color: #111;
+  background-color: #000;
   border: 0.5vw solid #00c7d5;
   border-radius: 1vw;
   box-shadow: 0 0 2vw #00c7d5;
@@ -44,6 +47,7 @@ canvas {
   max-height: 320px;
 }
 
+/* Besedilo za rezultat in nivo */
 p {
   font-size: 1vw;
   margin: 0.5vh 0;
@@ -51,30 +55,74 @@ p {
   text-shadow: 0 0 5px #ffffff;
 }
 
+/* Gumbi */
 .buttons {
   background: #00c7d5;
   color: #000;
-  font-size: 2vw; /* Font size scales with viewport width */
+  font-size: 2vw;
   font-family: "Press Start 2P", cursive;
   border: none;
-  padding: 1vh 2vw; /* Padding scales with viewport height and width */
-  border-radius: 1vw; /* Rounded corners scale with viewport width */
+  padding: 1vh 2vw;
+  border-radius: 1vw;
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0 0 1vw #00ffcc, 0 0 2vw #0095dd;
-  margin: 1vh; /* Margin scales with viewport height */
-  width: 40vw; /* Button width scales with viewport width */
-  height: 7vh; /* Button height scales with viewport height */
+  margin: 1vh;
+  width: 40vw;
+  height: 7vh;
   text-align: center;
   display: flex;
   justify-content: center;
-  align-items: center; /* Center text vertically */
+  align-items: center;
 }
 
 button:hover {
-  transform: scale(1.1); /* Slightly enlarge button on hover */
+  transform: scale(1.1);
 }
 
+/* Styles za sweetalert */
+.swal-popup {
+  border: 0.2vw solid #00c7d5;
+  border-radius: 1vw;
+  box-shadow: 0 0 2vw #00ffcc, 0 0 4vw #0095dd;
+}
+
+.swal-title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.5vw;
+  color: #ffcc00;
+  text-shadow: 0 0 1vw #ffcc00, 0 0 2vw #ff9900;
+}
+
+.swal-button {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1vw;
+  background: #00c7d5;
+  color: #000;
+  border: none;
+  border-radius: 0.5vw;
+  padding: 1vh 2vw;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.swal-button-cancel {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1vw;
+  background: #00c7d5;
+  color: #000;
+  border: none;
+  border-radius: 0.5vw;
+  padding: 1vh 2vw;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.swal-button:hover {
+  transform: scale(1.1);
+}
+
+/* Prilagoditve za manjše zaslone */
 @media (max-width: 768px) {
   h1 {
     font-size: 5vw;
@@ -85,9 +133,9 @@ button:hover {
   }
 
   button {
-    font-size: 2.5vw; /* Adjust font size for smaller screens */
-    width: 220px; /* Adjust width for smaller screens */
-    height: 55px; /* Adjust height for smaller screens */
+    font-size: 2.5vw;
+    width: 220px;
+    height: 55px;
   }
 
   canvas {
@@ -107,9 +155,9 @@ button:hover {
   }
 
   button {
-    font-size: 3.5vw; /* Adjust font size for very small screens */
-    width: 200px; /* Adjust width for very small screens */
-    height: 50px; /* Adjust height for very small screens */
+    font-size: 3.5vw;
+    width: 200px;
+    height: 50px;
   }
 
   canvas {

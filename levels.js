@@ -1,17 +1,17 @@
 const levelContainer = document.getElementById("levelContainer");
 const backButton = document.getElementById("backButton");
 
-// Function to calculate stars based on percentage
+// izracun zvezdic
 function calculateStars(percentage) {
-  if (percentage === 100) return 3; // 100% = 3 stars
-  if (percentage >= 50) return 2; // 50% to 99% = 2 stars
-  if (percentage > 0) return 1; // 1% to 49% = 1 star
-  return 0; // 0% = no stars
+  if (percentage === 100) return 3; // 100% = 3 zvezdice
+  if (percentage >= 50) return 2; // 50% to 99% = 2 zvezdici
+  if (percentage > 0) return 1; // 1% to 49% = 1 zvezdica
+  return 0; // 0% = 0 zvezdic
 }
 
-// Function to render stars
+// funkcija za risanje zvezdic
 function renderStars(stars) {
-  const fillWidth = (stars / 3) * 100; // Calculate the percentage of stars to fill
+  const fillWidth = (stars / 3) * 100; // izračuna širino zvezdic
   return `
     <div class="star-container">
       <div class="star-filled" style="--fill-width: ${fillWidth}%;"></div>
@@ -19,17 +19,18 @@ function renderStars(stars) {
   `;
 }
 
-// Populate levels with buttons and stars
+// zapolni levele
 for (let i = 1; i <= 20; i++) {
   const highScore =
-    parseInt(localStorage.getItem(`level${i}HighScore`), 10) || 0; // Get high score as a number
-  const stars = calculateStars(highScore); // Calculate stars based on high score
+    parseInt(localStorage.getItem(`level${i}HighScore`), 10) || 0;
+  const stars = calculateStars(highScore); // izračun zvezdic
 
   const levelLink = document.createElement("a");
-  levelLink.href = "#"; // Placeholder, updated below
+  levelLink.href = "#";
   levelLink.classList.add("level-btn");
-  levelLink.addEventListener("click", () => selectLevel(i)); // Handle level selection
+  levelLink.addEventListener("click", () => selectLevel(i));
 
+  // dodajanje zvezdic
   levelLink.innerHTML = `
     <div class="level-text">Level ${i}</div>
     <div class="stars">${renderStars(stars)}</div>
@@ -38,13 +39,13 @@ for (let i = 1; i <= 20; i++) {
   levelContainer.appendChild(levelLink);
 }
 
-// Function to handle level selection
+// funkcija za izbiranje levela
 function selectLevel(level) {
-  localStorage.setItem("selectedLevel", level); // Save selected level
-  window.location.href = "index.html"; // Redirect to the game
+  localStorage.setItem("selectedLevel", level);
+  window.location.href = "index.html";
 }
 
-// Back button functionality
+// back button
 backButton.addEventListener("click", () => {
   window.location.href = "index.html";
 });

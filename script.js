@@ -8,26 +8,26 @@ const V = SAT.Vector,
 let ball = new Circle(new V(240, 280), 10);
 let ballVelocity = new V(3, -3);
 
-// Paddle settings
+// Nastavitve loparja
 const paddleWidth = 75,
   paddleHeight = 10;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
-// Brick settings
+// Nastavitve opek
 const defaultBrickWidth = 75,
   brickHeight = 20,
   brickPadding = 10,
   brickOffsetLeft = 30;
 
-// Levels configuration
+// Konfiguracija nivojev
 const levels = [
   {
-    // Level 1
+    // Nivo 1
     pattern: [[1, 2, 3, 2, 1]],
     offsetTop: 60,
   },
   {
-    // Level 2
+    // Nivo 2
     pattern: [
       [1, 2, 1, 2, 1],
       [2, 3, 2, 3, 2],
@@ -35,7 +35,7 @@ const levels = [
     offsetTop: 50,
   },
   {
-    // Level 3
+    // Nivo 3
     pattern: [
       [0, 0, 1, 0, 0],
       [0, 2, 3, 2, 0],
@@ -44,7 +44,7 @@ const levels = [
     offsetTop: 50,
   },
   {
-    // Level 4
+    // Nivo 4
     pattern: [
       [1, 0, 2, 0, 3],
       [0, 2, 0, 3, 0],
@@ -53,7 +53,7 @@ const levels = [
     offsetTop: 50,
   },
   {
-    // Level 5
+    // Nivo 5
     pattern: [
       [1, 2, 3, 2, 1],
       [2, 3, 1, 3, 2],
@@ -62,7 +62,7 @@ const levels = [
     offsetTop: 50,
   },
   {
-    // Level 6
+    // Nivo 6
     pattern: [
       [1, 2, 3, 2, 1],
       [0, 2, 3, 2, 0],
@@ -71,7 +71,7 @@ const levels = [
     offsetTop: 50,
   },
   {
-    // Level 7
+    // Nivo 7
     pattern: [
       [1, 2, 3, 2, 3, 1],
       [0, 3, 0, 2, 0, 3],
@@ -80,7 +80,7 @@ const levels = [
     offsetTop: 40,
   },
   {
-    // Level 8
+    // Nivo 8
     pattern: [
       [1, 2, 3, 2, 1],
       [0, 2, 3, 2, 0],
@@ -89,7 +89,7 @@ const levels = [
     offsetTop: 50,
   },
   {
-    // Level 9
+    // Nivo 9
     pattern: [
       [1, 0, 2, 0, 3],
       [0, 3, 0, 2, 0],
@@ -99,7 +99,7 @@ const levels = [
     offsetTop: 40,
   },
   {
-    // Level 10
+    // Nivo 10
     pattern: [
       [1, 2, 3, 2, 3, 1],
       [2, 3, 1, 3, 2, 3],
@@ -108,7 +108,7 @@ const levels = [
     offsetTop: 40,
   },
   {
-    // Level 11
+    // Nivo 11
     pattern: [
       [1, 2, 3, 2, 3, 2, 1],
       [2, 3, 1, 3, 2, 3, 2],
@@ -116,7 +116,7 @@ const levels = [
     offsetTop: 30,
   },
   {
-    // Level 12
+    // Nivo 12
     pattern: [
       [1, 0, 2, 0, 3, 0, 1],
       [0, 2, 0, 3, 0, 2, 0],
@@ -125,7 +125,7 @@ const levels = [
     offsetTop: 30,
   },
   {
-    // Level 13
+    // Nivo 13
     pattern: [
       [1, 0, 2, 0, 3],
       [2, 0, 3, 0, 1],
@@ -135,7 +135,7 @@ const levels = [
     offsetTop: 30,
   },
   {
-    // Level 14
+    // Nivo 14
     pattern: [
       [1, 2, 0, 3, 1],
       [2, 3, 0, 1, 2],
@@ -145,7 +145,7 @@ const levels = [
     offsetTop: 30,
   },
   {
-    // Level 15
+    // Nivo 15
     pattern: [
       [1, 2, 3, 2, 3, 2, 1],
       [2, 3, 1, 3, 2, 3, 2],
@@ -155,7 +155,7 @@ const levels = [
     offsetTop: 20,
   },
   {
-    // Level 16
+    // Nivo 16
     pattern: [
       [1, 0, 2, 0, 3, 0, 1],
       [0, 2, 0, 3, 0, 2, 0],
@@ -166,7 +166,7 @@ const levels = [
     offsetTop: 20,
   },
   {
-    // Level 17
+    // Nivo 17
     pattern: [
       [1, 2, 3, 2, 3, 2, 1],
       [2, 0, 3, 1, 3, 0, 2],
@@ -176,7 +176,7 @@ const levels = [
     offsetTop: 20,
   },
   {
-    // Level 18
+    // Nivo 18
     pattern: [
       [1, 0, 2, 0, 3, 0, 1],
       [0, 2, 0, 3, 0, 2, 0],
@@ -187,7 +187,7 @@ const levels = [
     offsetTop: 20,
   },
   {
-    // Level 19
+    // Nivo 19
     pattern: [
       [1, 2, 3, 2, 3, 2, 1, 2],
       [2, 3, 1, 3, 2, 3, 2, 3],
@@ -198,7 +198,7 @@ const levels = [
     offsetTop: 10,
   },
   {
-    // Level 20
+    // Nivo 20
     pattern: [
       [1, 2, 3, 2, 3, 2, 1, 2, 3],
       [2, 0, 3, 0, 3, 0, 2, 0, 3],
@@ -210,7 +210,7 @@ const levels = [
   },
 ];
 
-// initialize bricks za trenutni level
+// Inicializacija opek za trenutni nivo
 function initializeBricks() {
   let cols = levelConfig.pattern[0].length;
   brickWidth =
@@ -219,7 +219,7 @@ function initializeBricks() {
       : defaultBrickWidth;
 
   bricks = [];
-  totalScore = 0; // Initialize total score for the level
+  totalScore = 0; // Skupni rezultat za nivo
   for (let r = 0; r < levelConfig.pattern.length; r++) {
     bricks[r] = [];
     for (let c = 0; c < levelConfig.pattern[r].length; c++) {
@@ -239,27 +239,28 @@ function initializeBricks() {
               : "#FFC300",
           score: brickScore,
         };
-        totalScore += brickScore; // Add the brick's score to the total score
+        totalScore += brickScore; // Dodaj točko za opeko k skupnemu rezultatu
       }
     }
   }
 }
 
-// nastavljanje levela
+// Nastavitev nivoja
 let selectedLevel = localStorage.getItem("selectedLevel") || "1";
 selectedLevel = parseInt(selectedLevel, 10);
 levelConfig = levels[selectedLevel - 1] || levels[0];
 
-document.getElementById("level").innerText = selectedLevel; // Update level tracker
-initializeBricks(); // Initialize bricks for the current level
+document.getElementById("level").innerText = selectedLevel; // Posodobi prikaz nivoja
+initializeBricks(); // Inicializiraj opeke za trenutni nivo
 
 let score = 0,
   gameRunning = true,
   gamePaused = false,
-  gameStarted = false; // Track game started
+  gameStarted = false; // Spremljanje stanja igre
 let rightPressed = false,
   leftPressed = false;
 
+// Premikanje loparja z desno in levo puščico
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") rightPressed = true;
   if (e.key === "ArrowLeft") leftPressed = true;
@@ -269,7 +270,7 @@ document.addEventListener("keyup", (e) => {
   if (e.key === "ArrowLeft") leftPressed = false;
 });
 
-// resetting the level with R
+// Ponastavitev nivoja z R
 document.addEventListener("keydown", (e) => {
   if (e.key === "r" || e.key === "R") {
     gamePaused = true;
@@ -279,6 +280,14 @@ document.addEventListener("keydown", (e) => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, Reset",
+      background: "#000000",
+      color: "#00ffcc",
+      customClass: {
+        popup: "swal-popup",
+        title: "swal-title",
+        confirmButton: "swal-button",
+        cancelButton: "swal-button-cancel",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         document.location.reload();
@@ -290,14 +299,13 @@ document.addEventListener("keydown", (e) => {
 let animationFrameId = null;
 let lastTime = 0;
 
-// Game update loop
+// Glavna zanka igre
 function update(timestamp) {
-  if (!gameRunning) return; // Stop if the game is not running
+  if (!gameRunning) return;
 
   if (gamePaused || !gameStarted) {
-    // If the game is paused or hasn't started, do not update anything
-    lastTime = timestamp; // Prevent deltaTime from accumulating
-    animationFrameId = requestAnimationFrame(update); // Keep the loop alive
+    lastTime = timestamp;
+    animationFrameId = requestAnimationFrame(update);
     return;
   }
 
@@ -312,8 +320,8 @@ function update(timestamp) {
   collisionDetection();
   ballPaddleCollision();
 
-  // Update ball position
-  ball.pos.x += ballVelocity.x * deltaTime * 60; // 60 FPS
+  // Posodobi položaj žoge
+  ball.pos.x += ballVelocity.x * deltaTime * 60;
   ball.pos.y += ballVelocity.y * deltaTime * 60;
 
   if (ball.pos.x + ball.r > canvas.width || ball.pos.x - ball.r < 0)
@@ -323,8 +331,17 @@ function update(timestamp) {
     gameRunning = false;
     Swal.fire({
       title: "Game Over",
+      text: "Try Again!",
       icon: "error",
-      confirmButtonText: "Try Again",
+      confirmButtonText: "Retry",
+      background: "#000000",
+      color: "#00ffcc",
+      confirmButtonColor: "#00c7d5",
+      customClass: {
+        popup: "swal-popup",
+        title: "swal-title",
+        confirmButton: "swal-button",
+      },
     }).then(() => document.location.reload());
   }
 
@@ -335,46 +352,47 @@ function update(timestamp) {
   animationFrameId = requestAnimationFrame(update);
 }
 
-// start the game loop
+// Funkcija za začetek igre
 function startGameLoop() {
-  if (!gameStarted) return; // Do not start the loop if the game hasn't started
+  if (!gameStarted) return;
 
   if (animationFrameId) {
-    cancelAnimationFrame(animationFrameId); // Cancel any existing loop
+    cancelAnimationFrame(animationFrameId);
   }
-  lastTime = performance.now(); // Reset lastTime to prevent deltaTime jumps
-  animationFrameId = requestAnimationFrame(update); // Start the new loop
+  lastTime = performance.now();
+  animationFrameId = requestAnimationFrame(update);
 }
 
+// Funkcija za ponastavitev igre
 function resetGame() {
-  ball.pos = new V(240, 280); // Reset ball to initial position
-  updateBallSpeed(); // Reset ball speed based on difficulty
-  paddleX = (canvas.width - paddleWidth) / 2; // Reset paddle position
-  score = 0; // Reset score
-  document.getElementById("score").innerText = score; // Update score display
-  initializeBricks(); // Reinitialize bricks
+  ball.pos = new V(240, 280);
+  updateBallSpeed();
+  paddleX = (canvas.width - paddleWidth) / 2;
+  score = 0;
+  document.getElementById("score").innerText = score;
+  initializeBricks();
 }
 
-// Self explanatory
+// Zaznavanje trkov z opekami
 function collisionDetection() {
   for (let c = 0; c < bricks.length; c++) {
     for (let r = 0; r < bricks[c].length; r++) {
       let brick = bricks[c][r];
-      if (!brick) continue; // Skip if brick is already removed
+      if (!brick) continue;
       let response = new Response();
       if (SAT.testCirclePolygon(ball, brick.polygon, response)) {
-        bricks[c][r] = null; // Remove brick
-        score += brick.score; // Add score based on brick type
-        document.getElementById("score").innerText = score;
+        bricks[c][r] = null;
+        score += brick.score;
+        document.getElementById("score").innerText = score; // Check collision side
 
         // Check collision side
         if (Math.abs(response.overlapV.x) > Math.abs(response.overlapV.y)) {
-          ballVelocity.x = -ballVelocity.x; // Side collision
+          ballVelocity.x = -bal; // Side collisionlVelocity.x; // Side collision
         } else {
           ballVelocity.y = -ballVelocity.y; // Top/bottom collision
         }
 
-        updateHighScore(); // Save the high score
+        updateHighScore();
 
         // Check if level is finished
         if (score >= totalScore) {
@@ -382,16 +400,24 @@ function collisionDetection() {
             gameRunning = false;
             selectedLevel++;
             if (selectedLevel > levels.length) {
-              selectedLevel = 1; // Reset to level 1 after last level
+              selectedLevel = 1;
               Swal.fire({
-                title: "Good Job!",
-                text: "You've completed all levels! Starting over from Level 1.",
+                title: "Odlično!",
+                text: "Zaključili ste vse nivoje! Začenjamo znova od nivoja 1.",
                 icon: "success",
-                confirmButtonText: "Continue",
+                confirmButtonText: "Nadaljuj",
+                background: "#000000",
+                color: "#00ffcc",
+                confirmButtonColor: "#00c7d5",
+                customClass: {
+                  popup: "swal-popup",
+                  title: "swal-title",
+                  confirmButton: "swal-button",
+                },
               }).then(() => {
                 localStorage.setItem("selectedLevel", selectedLevel);
                 levelConfig = levels[selectedLevel - 1];
-                document.getElementById("level").innerText = selectedLevel; // Update level tracker
+                document.getElementById("level").innerText = selectedLevel;
                 window.location.reload();
               });
             } else {
@@ -405,15 +431,23 @@ function collisionDetection() {
                 }. Moving to Level ${selectedLevel}.`,
                 icon: "success",
                 confirmButtonText: "Continue",
+                background: "#000000",
+                color: "#00ffcc",
+                confirmButtonColor: "#00c7d5",
+                customClass: {
+                  popup: "swal-popup",
+                  title: "swal-title",
+                  confirmButton: "swal-button",
+                },
               }).then(() => {
-                document.getElementById("level").innerText = selectedLevel; // Update level tracker
+                document.getElementById("level").innerText = selectedLevel;
                 window.location.reload();
               });
             }
-          }, 100); // Delay 100ms
+          }, 100);
         }
 
-        return; // Exit the loop
+        return;
       }
     }
   }
@@ -466,17 +500,18 @@ function ballPaddleCollision() {
   ).toPolygon();
   let response = new Response();
   if (SAT.testCirclePolygon(ball, paddle, response)) {
-    ballVelocity.y = -Math.abs(ballVelocity.y); // Ensure the ball bounces upward
+    ballVelocity.y = -Math.abs(ballVelocity.y);
     let hitPoint = (ball.pos.x - paddleX) / paddleWidth;
     let angle = ((hitPoint - 0.5) * Math.PI) / 2; // Calculate angle based on hit point
 
-    ballVelocity.x = Math.sin(angle); // Adjust x velocity based on angle
-    ballVelocity.y = -Math.cos(angle); // Adjust y velocity based on angle
+    ballVelocity.x = Math.sin(angle);
+    ballVelocity.y = -Math.cos(angle);
 
-    updateBallSpeed(); // Reapply the difficulty-based speed
+    updateBallSpeed();
   }
 }
 
+// Funkcija za risanje žoge
 function drawBall() {
   ctx.beginPath();
   ctx.arc(ball.pos.x, ball.pos.y, ball.r, 0, Math.PI * 2);
@@ -485,6 +520,7 @@ function drawBall() {
   ctx.closePath();
 }
 
+// Funkcija za risanje loparja
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
@@ -493,6 +529,7 @@ function drawPaddle() {
   ctx.closePath();
 }
 
+// Funkcija za risanje opek
 function drawBricks() {
   for (let c = 0; c < bricks.length; c++) {
     for (let r = 0; r < bricks[c].length; r++) {
@@ -513,28 +550,105 @@ function drawBricks() {
   }
 }
 
-// instructions button
+// Gumb za navodila
 document.getElementById("instructionsButton").addEventListener("click", () => {
-  const wasPaused = gamePaused; // če je bila pauza, jo shrani
+  const wasPaused = gamePaused;
   gamePaused = true;
 
+  // Step 1: Basic Controls
   Swal.fire({
-    title: "How to Play",
+    title: "Basic Controls",
     html: `
-<p style="color: #000; margin: 20px;">Use the <strong>Arrow Keys</strong> to move the paddle left and right.</p>
-<p style="color: #000; margin: 20px;">Break all the bricks to complete the level.</p>
-<p style="color: #000; margin: 20px;">Press <strong>R</strong> to reset the level.</p>
-<p style="color: #000; margin: 20px;">Click "Select Level" to choose a different level.</p>
-`,
+      <p style="color: #00ffcc; margin: 20px;">Use the <strong>Arrow Keys</strong> to move the paddle left and right.</p>
+      <p style="color: #00ffcc; margin: 20px;">Press <strong>Space</strong> to pause/resume the game.</p>
+      <p style="color: #00ffcc; margin: 20px;">Press <strong>R</strong> to reset the level.</p>
+    `,
     icon: "info",
-    confirmButtonText: "Got it!",
-    background: "#fff",
+    confirmButtonText: "Next",
+    background: "#000000",
+    color: "#00ffcc",
+    confirmButtonColor: "#00c7d5",
+    customClass: {
+      popup: "swal-popup",
+      title: "swal-title",
+      confirmButton: "swal-button",
+    },
   }).then(() => {
-    if (!wasPaused) {
-      // če ni bila pauza, resume the game
-      gamePaused = false;
-      startGameLoop(); // Resume the game loop safely
-    }
+    // Step 2: Objective
+    Swal.fire({
+      title: "Objective",
+      html: `
+        <p style="color: #00ffcc; margin: 20px;">Break all the bricks to complete the level.</p>
+        <p style="color: #00ffcc; margin: 20px;">Avoid letting the ball fall below the paddle!</p>
+      `,
+      icon: "info",
+      confirmButtonText: "Next",
+      background: "#000000",
+      color: "#00ffcc",
+      confirmButtonColor: "#00c7d5",
+      customClass: {
+        popup: "swal-popup",
+        title: "swal-title",
+        confirmButton: "swal-button",
+      },
+    }).then(() => {
+      // Step 3: Bonus Bricks
+      Swal.fire({
+        title: "Bonus Bricks",
+        html: `
+          <div style="margin-top: 20px;">
+            <p style="color: #00ffcc; margin-bottom: 10px;">Bonus Bricks:</p>
+            <div style="display: flex; justify-content: center; gap: 10px; align-items: center;">
+              <div style="width: 30px; height: 20px; background-color: #0095DD; border: 1px solid #ffffff;"></div>
+              <span style="color: #00ffcc;">Blue Brick: 1 Point</span>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px; align-items: center; margin-top: 10px;">
+              <div style="width: 30px; height: 20px; background-color: #FF5733; border: 1px solid #ffffff;"></div>
+              <span style="color: #00ffcc;">Orange Brick: 2 Points</span>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px; align-items: center; margin-top: 10px;">
+              <div style="width: 30px; height: 20px; background-color: #FFC300; border: 1px solid #ffffff;"></div>
+              <span style="color: #00ffcc;">Yellow Brick: 3 Points</span>
+            </div>
+          </div>
+        `,
+        icon: "info",
+        confirmButtonText: "Next",
+        background: "#000000",
+        color: "#00ffcc",
+        confirmButtonColor: "#00c7d5",
+        customClass: {
+          popup: "swal-popup",
+          title: "swal-title",
+          confirmButton: "swal-button",
+        },
+      }).then(() => {
+        // Step 4: Difficulty and Levels
+        Swal.fire({
+          title: "Difficulty and Levels",
+          html: `
+            <p style="color: #00ffcc; margin: 20px;">Change the difficulty by clicking the "Difficulty" button.</p>
+            <p style="color: #00ffcc; margin: 20px;">Click "Select Level" to choose a different level.</p>
+            <p style="color: #00ffcc; margin: 20px;">Game made by github.com/farisosmic</p>
+          `,
+          icon: "info",
+          confirmButtonText: "Got it!",
+          background: "#000000",
+          color: "#00ffcc",
+          confirmButtonColor: "#00c7d5",
+          customClass: {
+            popup: "swal-popup",
+            title: "swal-title",
+            confirmButton: "swal-button",
+          },
+        }).then(() => {
+          if (!wasPaused) {
+            gamePaused = false;
+            startGameLoop();
+          }
+        });
+      });
+    });
   });
 });
 
@@ -554,13 +668,13 @@ const difficultyButton = document.getElementById("difficultyButton");
 
 // Function to update ball speed based on difficulty
 function updateBallSpeed() {
-  const speed = difficulty === "Easy" ? 2 : difficulty === "Norm" ? 3 : 5; // Set speed based on difficulty
-  const magnitude = Math.sqrt(ballVelocity.x ** 2 + ballVelocity.y ** 2); // Calculate current speed
-  ballVelocity.x = (ballVelocity.x / magnitude) * speed; // Scale x velocity
-  ballVelocity.y = (ballVelocity.y / magnitude) * speed; // Scale y velocity
+  const speed = difficulty === "Easy" ? 2 : difficulty === "Norm" ? 3 : 5;
+  const magnitude = Math.sqrt(ballVelocity.x ** 2 + ballVelocity.y ** 2);
+  ballVelocity.x = (ballVelocity.x / magnitude) * speed;
+  ballVelocity.y = (ballVelocity.y / magnitude) * speed;
 }
 
-// Event listener for the difficulty button
+// Gumb za spremembo težavnosti
 difficultyButton.addEventListener("click", () => {
   if (difficulty === "Easy") {
     difficulty = "Norm";
@@ -570,11 +684,11 @@ difficultyButton.addEventListener("click", () => {
     difficulty = "Easy";
   }
 
-  difficultyButton.innerText = `Difficulty: ${difficulty}`;
-  updateBallSpeed(); // Update the ball speed based on the new difficulty
+  difficultyButton.innerText = `Težavnost: ${difficulty}`;
+  updateBallSpeed();
 });
 
-// Initialize the ball speed based on the default difficulty
+// Inicializacija hitrosti žoge glede na privzeto težavnost
 updateBallSpeed();
 
 window.onload = () => {

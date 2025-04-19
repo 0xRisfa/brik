@@ -12,12 +12,14 @@ body {
   text-align: center;
   overflow-y: auto;
 }
+
 h1 {
   font-size: 2rem;
   color: #ffcc00;
   text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
   margin: 20px 0;
 }
+
 .level-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -27,6 +29,8 @@ h1 {
   padding: 10px;
   box-sizing: border-box;
 }
+
+/* zvezdice */
 .stars {
   display: flex;
   justify-content: center;
@@ -41,29 +45,26 @@ h1 {
 
 .star-container {
   position: relative;
-  width: 80px; /* Adjust size as needed */
-  height: 24px; /* Adjust size as needed */
-  background: url("slike/stars-empty.png") no-repeat; /* Background with empty stars */
+  width: 80px;
+  height: 24px;
+  background: url("slike/stars-empty.png") no-repeat;
   background-size: contain;
-  overflow: hidden; /* Ensure the filled stars don't overflow */
+  overflow: hidden;
 }
 
 .star-filled {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* Always match the container width */
+  width: 100%;
   height: 100%;
-  background: url("slike/stars-filled.png") no-repeat; /* Background with filled stars */
+  background: url("slike/stars-filled.png") no-repeat;
   background-size: contain;
-  background-position: left; /* Start from the left */
-  clip-path: inset(
-    0 calc(100% - var(--fill-width, 0%)) 0 0
-  ); /* Reveal stars dynamically */
-  transition: clip-path 0.3s ease; /* Smooth transition for star updates */
+  background-position: left;
+  clip-path: inset(0 calc(100% - var(--fill-width, 0%)) 0 0);
 }
 .star.empty {
-  color: #ccc; /* Empty star color */
+  color: #ccc;
 }
 .level-btn {
   display: flex;
@@ -82,7 +83,7 @@ h1 {
   text-align: center;
   width: 100%;
   height: 80px;
-  text-decoration: none; /* Remove underline for links */
+  text-decoration: none;
 }
 
 .level-btn:hover {
