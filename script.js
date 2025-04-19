@@ -387,7 +387,7 @@ function collisionDetection() {
 
         // Check collision side
         if (Math.abs(response.overlapV.x) > Math.abs(response.overlapV.y)) {
-          ballVelocity.x = -bal; // Side collisionlVelocity.x; // Side collision
+          ballVelocity.x = -ballVelocity.x; // Side collision
         } else {
           ballVelocity.y = -ballVelocity.y; // Top/bottom collision
         }
