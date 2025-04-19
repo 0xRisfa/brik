@@ -625,11 +625,12 @@ document.getElementById("instructionsButton").addEventListener("click", () => {
       }).then(() => {
         // Step 4: Difficulty and Levels
         Swal.fire({
-          title: "Difficulty and Levels",
+          title: "Levels and Credits",
           html: `
             <p style="color: #00ffcc; margin: 20px;">Change the difficulty by clicking the "Difficulty" button.</p>
             <p style="color: #00ffcc; margin: 20px;">Click "Select Level" to choose a different level.</p>
-            <p style="color: #00ffcc; margin: 20px;">Game made by github.com/farisosmic</p>
+            <p style="color: orange; margin: 20px;">Game made by Faris Osmic</p>
+            <p><a href="https://github.com/farisosmic/brik" target="_blank" style="color: orange; text-decoration: underline;">GitHub Link</a></p>
           `,
           icon: "info",
           confirmButtonText: "Got it!",
