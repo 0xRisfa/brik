@@ -1,22 +1,18 @@
-🧱 brik
-brik je preprosta spletna igra, ki temelji na klasični igri "Breakout". Igralec nadzoruje ploščico, s katero odbija žogico in razbija bloke.
+# 🧱 brik brik
 
-🎮 Predogled
-👉 Igraj zdaj
+**brik brik** je preprosta spletna igra, ki temelji na klasični igri *Breakout*. Igralec nadzoruje ploščico, s katero odbija žogico in razbija bloke.
 
-🚀 Začetek
-Zagon lokalno
+🎮 [**Igraj zdaj**](https://farisosmic.github.io/brik)
+
+## 🚀 Zagon lokalno
+
 Kloniraj repozitorij:
 
-bash
-Copy
-Edit
+```bash
 git clone https://github.com/farisosmic/brik.git
 cd brik
-Odpri index.html v svojem brskalniku.
-
-Ali
-Odpri farisosmic.github.io/brik in igraj neposredno v brskalniku.
+Odpri index.html v svojem brskalniku ali odpri:
+👉 https://farisosmic.github.io/brik
 
 🛠️ Tehnologije
 HTML5
