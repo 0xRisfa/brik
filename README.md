@@ -29,7 +29,7 @@ Odpri datoteko `index.html` v svojem brskalniku.
 
 - HTML5  
 - CSS3  
-- JavaScript (brez zunanjih knjižnic)
+- JavaScript (uporabljena knjižnica SAT.js, ki jo najdete na naslovu [https://github.com/jriecken/sat-js](https://github.com/jriecken/sat-js)
 
 ---
 
