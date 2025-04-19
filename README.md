@@ -5,23 +5,19 @@ Igralec nadzoruje ploščico, s katero odbija žogico in razbija bloke.
 
 ---
 
-🎮 **Predogled**: [👉 Igraj zdaj](https://farisosmic.github.io/brik)
-
----
-
 ## 📦 Zagon lokalno
 
 Kloniraj repozitorij in zaženi lokalno:
 
 ```bash
-git clone https://github.com/farisosmic/brik.git
+git clone https://github.com/0xRisfa/brik.git
 cd brik
 ```
 
 Odpri datoteko `index.html` v svojem brskalniku.
 
 **ALI** zaženi v brskalniku preko GitHub Pages:  
-👉 [https://farisosmic.github.io/brik](https://farisosmic.github.io/brik)
+👉 [https://0xRisfa.github.io/brik](https://0xRisfa.github.io/brik)
 
 ---
 
