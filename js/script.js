@@ -393,6 +393,12 @@ function collisionDetection() {
         }
 
         updateHighScore();
+        currentBallImage = ballHitImage;
+
+        // normalna tekstura po 1 sekundi
+        setTimeout(() => {
+          currentBallImage = ballImage;
+        }, 1000);
 
         // Check if level is finished
         if (score >= totalScore) {
@@ -512,39 +518,71 @@ function ballPaddleCollision() {
 }
 
 // Funkcija za risanje žoge
+
+const ballImage = new Image();
+ballImage.src = "slike/dumbsmile.png";
+
+const ballHitImage = new Image();
+ballHitImage.src = "slike/ball-hit.png";
+
+let currentBallImage = ballImage;
+
 function drawBall() {
-  ctx.beginPath();
-  ctx.arc(ball.pos.x, ball.pos.y, ball.r, 0, Math.PI * 2);
-  ctx.fillStyle = "#0095DD";
-  ctx.fill();
-  ctx.closePath();
+  if (currentBallImage.complete) {
+    ctx.drawImage(
+      currentBallImage,
+      ball.pos.x - ball.r,
+      ball.pos.y - ball.r,
+      ball.r * 2,
+      ball.r * 2
+    );
+  }
 }
 
 // Funkcija za risanje loparja
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "#0095DD";
+  ctx.fillStyle = "brown";
   ctx.fill();
   ctx.closePath();
 }
 
 // Funkcija za risanje opek
+
+const blueBrickImage = new Image();
+blueBrickImage.src = "slike/brickblue.png";
+
+const orangeBrickImage = new Image();
+orangeBrickImage.src = "slike/brickred.png";
+
+const yellowBrickImage = new Image();
+yellowBrickImage.src = "slike/brickyellow.png";
+
 function drawBricks() {
   for (let c = 0; c < bricks.length; c++) {
     for (let r = 0; r < bricks[c].length; r++) {
       let brick = bricks[c][r];
       if (brick) {
-        ctx.beginPath();
-        ctx.rect(
-          brick.polygon.pos.x,
-          brick.polygon.pos.y,
-          brickWidth,
-          brickHeight
-        );
-        ctx.fillStyle = brick.color;
-        ctx.fill();
-        ctx.closePath();
+        let brickImage;
+
+        if (brick.type === 1) {
+          brickImage = blueBrickImage;
+        } else if (brick.type === 2) {
+          brickImage = orangeBrickImage;
+        } else if (brick.type === 3) {
+          brickImage = yellowBrickImage;
+        }
+
+        if (brickImage.complete) {
+          ctx.drawImage(
+            brickImage,
+            brick.polygon.pos.x,
+            brick.polygon.pos.y,
+            brickWidth,
+            brickHeight
+          );
+        }
       }
     }
   }
@@ -669,7 +707,7 @@ const difficultyButton = document.getElementById("difficultyButton");
 
 // Function to update ball speed based on difficulty
 function updateBallSpeed() {
-  const speed = difficulty === "Easy" ? 2 : difficulty === "Norm" ? 3 : 5;
+  const speed = difficulty === "Easy" ? 2 : difficulty === "Norm" ? 5 : 10;
   const magnitude = Math.sqrt(ballVelocity.x ** 2 + ballVelocity.y ** 2);
   ballVelocity.x = (ballVelocity.x / magnitude) * speed;
   ballVelocity.y = (ballVelocity.y / magnitude) * speed;
